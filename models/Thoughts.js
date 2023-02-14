@@ -1,10 +1,36 @@
 const { Schema, model, Types } = require('mongoose');
-const { stringify } = require('querystring');
-const { moveMessagePortToContext } = require('worker_threads');
+const moment = require('moment');
 
+const reactionSchema = new Schema(
+    {
+      reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+      },
+      reactionBody: {
+          type: String,
+          required: true,
+          maxlength: 280,  
+          
+      },
+      userName: {
+          type: String,
+          required: true,
+      },
+      createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (createdAtVal) => moment ( createdAtVal).format('MM DD, YY [at} hh:mm a')
+          },
+    },
+    {
+      toJSON: {
+        getters: true,
+      },
+    }
+  );
 
-
-const reactionSchema = new Schema (
+const thoughtsSchema = new Schema (
     {
         thoughtText: {
             type: String,
@@ -19,55 +45,32 @@ const reactionSchema = new Schema (
             type: Date, 
             default: Date.now,
             get: (createdAtVal) => moment ( createdAtVal).format('MM DD, YY [at} hh:mm a')
-        }
-        // reactions {
-
-        // },
-
-    }
-),
-
-
-
-
-
-const userSchema = new Schema(
-  {
-    UserName: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [
-            /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-            "Use valid email",
-        ]
-    },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Thoughts',
-      },
-    ],
-    friends: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'User',
         },
-      ],
-  },
-  {
-    toJSON: {
-      virtuals: true,
+        reactions: [ 
+            reactionSchema
+        ]
+
     },
-    id: false,
-  }
-);
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
+)
+
+thoughtsSchema.virtual('reactionCount').get(function(){ 
+    return this.reactions.length;
+
+} );
+
+const Thoughts = model ('Thoughts', thoughtsSchema);
+
+module.exports = Thoughts;
+
+
+
 
 userSchema.virtual('friendCount').get(function(){
     return this.friends.length;

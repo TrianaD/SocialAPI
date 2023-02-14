@@ -2,6 +2,7 @@
 
 # Project Description 
 
+Build an API social network application so users can share and react to friends thoughts. 
 
 
 # Table of Contents
@@ -9,6 +10,8 @@
 # Table of Contents
 * [User Story](#User-Story)
 * [Acceptance Criteria](#Acceptance-Criteria) 
+* [Usage](#Usage)
+* [Contact](#Contact) 
 
 
 
@@ -32,25 +35,23 @@ THEN the data for each of these routes is displayed in a formatted JSON
 
 # Usage
 
-The following screenshots show examples of the interaction and options presented to the user when application is initiated. 
+The following are steps to run the application. 
+
+## Installation 
+
+Run npm i in terminal to install all dependencies. 
+
+## Languages / Technology 
+
+* Express
+* Mongo DB
 
 
-Homepage:
 
-![showing homepage](./public/assets/images/homepage1.png)
-
-
-
-##  Contact
+# Contact and Video 
 
 [GitHub Link](https://github.com/TrianaD/SocialAPI)
 
-## Site View
-
-Quiz page view
-<img src="./assets/images/quiz_page.png"> 
-High scores page view
-
-<img src="./assets/images/highscores_page.png">
+[Video Link (in Work)](https://github.com/TrianaD/SocialAPI)
 
 

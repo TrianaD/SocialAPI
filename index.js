@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const db = require('./config/connection');
 const routes = require('./routes');
 
-
+mongoose.connect('mongodb://127.0.0.1:27017/test')
+  .then(() => console.log('Connected!'));
 
 const PORT = process.env.port || 3001;
 const app = express();
